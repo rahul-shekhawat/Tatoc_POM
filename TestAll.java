@@ -1,8 +1,7 @@
 package com.qait.testing.TatocTesting;
 
 import org.openqa.selenium.WebDriver;
-
-
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -21,6 +20,7 @@ public class TestAll {
 	DragAround drag;
 	PopUpWindow pop;
 	Cookiepage cookie;
+	
 	@Test(priority=0)
 	public void clickonredboxshouldrendererrorpage()
 	{   gridobj=new GridGate(driver);
@@ -49,13 +49,28 @@ public class TestAll {
 	}
 	
 	@Test(priority=4)
+	public void unsuccessfuldragwillgotoerrorpage()
+	{
+		drag=new DragAround(driver);
+		WebElement from,to;
+		from=drag.getdragboxelement();
+		to=drag.getdropboxelement();
+		drag.draganddrop(from,from);
+		driver.navigate().back();
+	}
+
+	@Test(priority=5)
 	public void successfuldragwillgotonextpage()
 	{
 		drag=new DragAround(driver);
-		drag.draganddrop();
+		WebElement from,to;
+		from=drag.getdragboxelement();
+		to=drag.getdropboxelement();
+		drag.draganddrop(from,to);
 		
 	}
 	
+		
 	@Test(priority=6)
 	public void unsuccessfulformsubmissionwillgotoerrorpage()
 	{
@@ -79,7 +94,7 @@ public class TestAll {
 	}
 	
 	@BeforeClass
-	public void launchChrome()
+	public void launchWebsite()
 	{   
 		System.setProperty("webdriver.chrome.driver","chromedriver");
 		driver=new ChromeDriver();
